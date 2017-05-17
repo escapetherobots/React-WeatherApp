@@ -1,9 +1,19 @@
 var express = require('express');
 
 var app = express();
+const PORT = process.env.PORT || 5555;
+
+app.use( function(req, res, next){
+	if(req.headers['x-forwarded-proto'] === 'http') {
+		next();
+	} else {
+		res.redirect( 'http://'+ req.hostname + req.url );
+	}
+});
 
 app.use(express.static('public'));
 
-app.listen(5555, function(){
-	console.log('Server up on 5555');
+app.listen(PORT, function(){
+	console.log('Server is up on ' + PORT);
+	
 })
