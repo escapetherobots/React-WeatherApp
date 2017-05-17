@@ -22,8 +22,8 @@ module.exports = {
 			}
 		};
 
-		function fail(res){
-			throw new Error(res.data.message);
+		function fail(err){
+			throw new Error(err.response.data.message);
 		}
 
 		return axios.get(requestUrl).then(success, fail);
