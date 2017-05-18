@@ -84,12 +84,12 @@ var Weather = React.createClass({
 
 		return (
 			<div className="row">
-					<div className="columns medium-8 large-8 small-centered">
-				<h1 className="text-center page-title">Get Weather</h1>
-				<WeatherForm onFormEvent={this.handleForm} />
-				{renderMessage()}
-				{renderError()}
-				<hr/>
+				<div className="columns medium-8 large-8 small-centered">
+					<h1 className="text-center page-title">Get Weather</h1>
+					<WeatherForm onFormEvent={this.handleForm} />
+					{renderMessage()}
+					{renderError()}
+					<hr/>
 				</div>
 			</div>
 		);
