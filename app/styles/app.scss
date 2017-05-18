@@ -1,0 +1,33 @@
+$blue: lightblue;
+
+.page-title {
+	font-weight: bolder;
+	margin-top: 20px;
+	text-transform: uppercase;
+	color: $blue;
+}
+
+input[type=search] {
+	box-shadow: none;
+}
+
+.zborder {
+	border: 1px solid #ccc;
+}
+
+.zbox {
+	border: 1px solid #ccc;
+	min-height: 100px;
+	display: block;
+
+}
+
+.mw, .tth, .f {
+	width: 33.333%;
+	float: left;
+	display: block;
+}
+
+.teach {
+	border: 1px solid orange;
+}
