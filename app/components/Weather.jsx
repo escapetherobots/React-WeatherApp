@@ -2,7 +2,9 @@ var React = require('react');
 
 var WeatherForm = require('WeatherForm');
 var WeatherDisplay = require('WeatherDisplay');
-
+import graphData from './../api/graphData';
+import D3Test01 from './D3Test01';
+import D3Test02 from './D3Test02';
 var ErrorModal = require('ErrorModal');
 var openWeatherMap = require('openWeatherMap');
 
@@ -14,7 +16,11 @@ var Weather = React.createClass({
 			isLoading: false,
 			errorMessage: undefined,
 			location: undefined,
-			weather: undefined
+			weather: undefined,
+			forecast: [],
+			width: 960,
+			height: 600,
+			graphData: graphData,
 		};
 	},
 
@@ -42,19 +48,41 @@ var Weather = React.createClass({
 			isLoading: true
 		})
 		//debugger;
-		
+
 		// RUN PROMISE
 		// use arrow functions to maintain this = Weather object
-		openWeatherMap.getTemp(city).then(
-			(temp) => {
+
+		// openWeatherMap.getTemp(city).then(
+		// 	(temp) => {
+		// 		return this.setState({
+		// 			city: city,
+		// 			weather: temp,
+		// 			isLoading: false
+		// 		});
+		// 	}
+		// ,
+		// 	(errObj) => {
+		// 		this.setState({
+		// 			isLoading: false,
+		// 			errorMessage: errObj.message,
+		// 			errorTitle: 'Error'
+		// 		});
+		// 	}
+		// );
+
+		openWeatherMap.getFiveDayTemp(city).then(
+			(res) => {
 				return this.setState({
-					city: city,
-					weather: temp,
-					isLoading: false
+					isLoading: false,
+					forecast: res.list,
+					city: res.city.name,
+					weather: res.list[0].main.temp
 				});
+
 			}
-		, 
+		,
 			(errObj) => {
+				console.log(errObj);
 				this.setState({
 					isLoading: false,
 					errorMessage: errObj.message,
@@ -63,16 +91,18 @@ var Weather = React.createClass({
 			}
 		);
 
+
+
 	},
 
 	render: function(){
-		var {isLoading, city, weather, errorMessage, errorTitle} = this.state;
+		var {isLoading, city, weather, errorMessage, errorTitle, forecast} = this.state;
 
 		function renderMessage() {
 			if (isLoading){
 				return (<h3>...Fetching Weather</h3>);
 			} else if(weather && city) {
-				return <WeatherDisplay city={city} weather={weather}/>;
+				return <WeatherDisplay city={city} weather={weather} forecast={forecast}/>;
 			}
 		}
 
@@ -90,6 +120,8 @@ var Weather = React.createClass({
 					{renderMessage()}
 					{renderError()}
 					<hr/>
+					<D3Test01 />
+					<D3Test02 />
 				</div>
 			</div>
 		);
